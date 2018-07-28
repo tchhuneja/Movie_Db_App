@@ -1,5 +1,6 @@
 package com.example.tc.movie_db;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -28,6 +29,8 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +53,8 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setCheckedItem(R.id.movies);
         setTitle("Movies");
+        toolbar.setBackgroundColor(Color.parseColor("#970e0e"));
         setFragment(new MovieFragment());
 
     }
@@ -109,8 +114,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.movies) {
-            setTitle("Movies");
-            setFragment(new MovieFragment());
+            if (!item.isChecked()) {
+                toolbar=findViewById(R.id.toolbar);
+                toolbar.setBackgroundColor(Color.parseColor("#970e0e"));
+                setTitle("Movies");
+                setFragment(new MovieFragment());
+
+            }
             return true;
         } else if (id == R.id.tv_shows) {
 

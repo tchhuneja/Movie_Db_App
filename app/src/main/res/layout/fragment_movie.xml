@@ -5,10 +5,175 @@
     android:layout_height="match_parent"
     tools:context=".MovieFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/now_showing_recycler"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Now Showing"
+                android:textColor="#970e0e"
+                android:textStyle="bold|italic"
+                android:textSize="35sp"
+                android:paddingLeft="8dp"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="46sp"
+                android:gravity="start"
+                android:layout_weight="1"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:src="@drawable/ic_play_circle_outline_black_36dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="View All"
+                android:clickable="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/now_showing_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Upcoming"
+                android:textColor="#970e0e"
+                android:textStyle="bold|italic"
+                android:textSize="35sp"
+                android:paddingLeft="8dp"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="46sp"
+                android:gravity="start"
+                android:layout_weight="1"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:src="@drawable/ic_theaters_black_36dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="View All"
+                android:clickable="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/upcoming_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Popular"
+                android:textColor="#970e0e"
+                android:textStyle="bold|italic"
+                android:textSize="35sp"
+                android:paddingLeft="8dp"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="46sp"
+                android:gravity="start"
+                android:layout_weight="1"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:src="@drawable/ic_equalizer_black_24dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="View All"
+                android:clickable="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/popular_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Top Rated"
+                android:textColor="#970e0e"
+                android:textStyle="bold|italic"
+                android:textSize="35sp"
+                android:paddingLeft="8dp"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="46sp"
+                android:gravity="start"
+                android:layout_weight="1"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:src="@drawable/ic_stars_black_36dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="View All"
+                android:clickable="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/top_rated_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+    </LinearLayout>
 
 </FrameLayout>

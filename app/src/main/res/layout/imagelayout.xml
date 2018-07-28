@@ -5,7 +5,7 @@
     app:cardCornerRadius="4dp"
     android:layout_margin="4dp"
     android:clickable="true"
-    android:elevation="100dp"
+    android:elevation="150dp"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground">
 
@@ -36,20 +36,39 @@
                 android:id="@+id/rating"
                 android:textColor="#ffffff"
                 android:textSize="18dp"
-                android:layout_gravity="end|bottom"/>
+                android:layout_gravity="end|bottom"
+                android:paddingEnd="6dp"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:paddingLeft="8dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/title"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="#ffffff"
-                android:layout_gravity="start|bottom"/>
+                android:layout_gravity="start|bottom"
+                android:ellipsize="end"
+                android:maxLines="1"/>
         </FrameLayout>
-<!--fff2e41f-->
         <TextView
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/genre"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+
+        <ImageButton
+            android:id="@+id/favbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/genre"/>
+            android:layout_gravity="right"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            android:tint="@android:color/darker_gray" />
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

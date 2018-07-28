@@ -1,11 +1,16 @@
 package com.example.tc.movie_db;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -38,11 +43,12 @@ public class NowShowingAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
         //2)
         String backdrop_path=movie.getBackdropPath();
-        Picasso.get().load("https://image.tmdb.org/t/p/w780"+backdrop_path).resize(1000,600).into(holder.image);
-        //Picasso.get().load()
+        Picasso.get().load("https://image.tmdb.org/t/p/w780"+backdrop_path).resize(950,600).into(holder.image);
 
         //3)
-        holder.rating.setText(movie.getVoteAverage()+ "★");
+        Spannable spannable=new SpannableString(movie.getVoteAverage()+"★");
+        spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fff2e41f")),3,4,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.rating.setText(spannable);
 
         //4)
         setGenres(holder,movies.get(position));

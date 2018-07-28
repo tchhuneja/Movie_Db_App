@@ -7,10 +7,14 @@ import android.app.Fragment;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +37,6 @@ public class MovieFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +50,9 @@ public class MovieFragment extends android.support.v4.app.Fragment {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+        SnapHelper snapHelper=new GravitySnapHelper(Gravity.START);
+        snapHelper.attachToRecyclerView(recyclerView);
 
         final Retrofit retrofit=ApiClient.getRetrofit();
 
