@@ -46,10 +46,23 @@ public class NowShowingAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         Picasso.get().load("https://image.tmdb.org/t/p/w780"+backdrop_path).resize(950,600).into(holder.image);
 
         //3)
-        Spannable spannable=new SpannableString(movie.getVoteAverage()+"★");
-        spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fff2e41f")),3,4,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        holder.rating.setText(spannable);
-
+        if (movie.getVoteAverage()>0) {
+            if (movie.getVoteAverage()<10.0D) {
+                Spannable spannable = new SpannableString(movie.getVoteAverage() + "★");
+                spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fff2e41f")), 3, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                holder.rating.setText(spannable);
+            }
+            else{
+                Spannable spannable = new SpannableString(movie.getVoteAverage() + "★");
+                spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fff2e41f")), 4, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                holder.rating.setText(spannable);
+            }
+        }
+        else {
+            Spannable spannable = new SpannableString("N/A"+ "★");
+            spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fff2e41f")), 3, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.rating.setText(spannable);
+        }
         //4)
         setGenres(holder,movies.get(position));
 
@@ -62,9 +75,15 @@ public class NowShowingAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     public void setGenres(MovieViewHolder holder,Result movie){
         String genrestring=" ";
-        for (int i=0;i<movie.getGenreIds().size();i++){
-            genrestring+=InitialiseMovieGenres.getGenreName(movie.getGenreIds().get(i).intValue()) + ", ";
+        if (movie.getGenreIds().size()==0)
+            genrestring="(Not Available)";
+        else {
+            for (int i = 0; i < movie.getGenreIds().size(); i++)
+                genrestring += InitialiseMovieGenres.getGenreName(movie.getGenreIds().get(i).intValue()) + ", ";
         }
-        holder.genre.setText(genrestring.substring(0,genrestring.length()-2));//to not display ", "
+        if (!genrestring.equals("(Not Available)"))
+            holder.genre.setText(genrestring.substring(0,genrestring.length()-2));//to not display ", "
+        else
+            holder.genre.setText(genrestring);
     }
 }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
@@ -30,8 +31,11 @@ import retrofit2.Retrofit;
  */
 public class MovieFragment extends android.support.v4.app.Fragment {
 
-    RecyclerView recyclerView;
-    ArrayList<Result> mmovies=new ArrayList<>();
+    RecyclerView recyclerView_NS,recyclerView_U,recyclerView_P,recyclerView_TR;
+    ArrayList<Result> mmovies_NS=new ArrayList<>();
+    ArrayList<Result> mmovies_U=new ArrayList<>();
+    ArrayList<Result> mmovies_P=new ArrayList<>();
+    ArrayList<Result> mmovies_TR=new ArrayList<>();
 
     public MovieFragment() {
         // Required empty public constructor
@@ -44,36 +48,125 @@ public class MovieFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_movie, container, false);
 
-        recyclerView=view.findViewById(R.id.now_showing_recycler);
+        recyclerView_NS=view.findViewById(R.id.now_showing_recycler);
 
-        final NowShowingAdapter adapter=new NowShowingAdapter(getContext(),mmovies);
+        final NowShowingAdapter adapter=new NowShowingAdapter(getContext(),mmovies_NS);
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        recyclerView_NS.setAdapter(adapter);
+        recyclerView_NS.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         SnapHelper snapHelper=new GravitySnapHelper(Gravity.START);
-        snapHelper.attachToRecyclerView(recyclerView);
+        snapHelper.attachToRecyclerView(recyclerView_NS);
 
         final Retrofit retrofit=ApiClient.getRetrofit();
 
         MovidbService service=retrofit.create(MovidbService.class);
+
         Call<NowPlaying> call=service.getNowPlaying();
         call.enqueue(new Callback<NowPlaying>() {
             @Override
             public void onResponse(Call<NowPlaying> call, Response<NowPlaying> response) {
                 NowPlaying nowPlaying=response.body();
                 List<Result> movies=nowPlaying.getResults();
-                mmovies.addAll(movies);
+                for (Result movie:movies) {
+                    if (movie.getBackdropPath()!=null)
+                        mmovies_NS.add(movie);
+                }
                 adapter.notifyDataSetChanged();
             }
-
             @Override
             public void onFailure(Call<NowPlaying> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
+
+        recyclerView_U=view.findViewById(R.id.upcoming_recycler);
+
+        final NowShowingAdapter adapter1=new NowShowingAdapter(getContext(),mmovies_U);
+
+        recyclerView_U.setAdapter(adapter1);
+        recyclerView_U.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+        SnapHelper snapHelper1=new GravitySnapHelper(Gravity.START);
+        snapHelper1.attachToRecyclerView(recyclerView_U);
+
+        Call<Upcoming> call1=service.getUpcoming();
+        call1.enqueue(new Callback<Upcoming>() {
+            @Override
+            public void onResponse(Call<Upcoming> call, Response<Upcoming> response) {
+                Upcoming upcoming=response.body();
+                List<Result> movies=upcoming.getResults();
+                for (Result movie:movies) {
+                    if (movie.getBackdropPath()!=null)
+                        mmovies_U.add(movie);
+                }
+                adapter1.notifyDataSetChanged();
+            }
+            @Override
+            public void onFailure(Call<Upcoming> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        recyclerView_P=view.findViewById(R.id.popular_recycler);
+
+        final NowShowingAdapter adapter2=new NowShowingAdapter(getContext(),mmovies_P);
+
+        recyclerView_P.setAdapter(adapter2);
+        recyclerView_P.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+        SnapHelper snapHelper2=new GravitySnapHelper(Gravity.START);
+        snapHelper2.attachToRecyclerView(recyclerView_P);
+
+        Call<Popular> call2=service.getPopular();
+        call2.enqueue(new Callback<Popular>() {
+            @Override
+            public void onResponse(Call<Popular> call, Response<Popular> response) {
+                Popular popular=response.body();
+                List<Result> movies=popular.getResults();
+                for (Result movie:movies) {
+                    if (movie.getBackdropPath()!=null)
+                        mmovies_P.add(movie);
+                }
+                adapter2.notifyDataSetChanged();
+            }
+            @Override
+            public void onFailure(Call<Popular> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        recyclerView_TR=view.findViewById(R.id.top_rated_recycler);
+
+        final NowShowingAdapter adapter3=new NowShowingAdapter(getContext(),mmovies_TR);
+
+        recyclerView_TR.setAdapter(adapter3);
+        recyclerView_TR.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+        SnapHelper snapHelper3=new GravitySnapHelper(Gravity.START);
+        snapHelper3.attachToRecyclerView(recyclerView_TR);
+
+        Call<TopRated> call3=service.getTopRated();
+        call3.enqueue(new Callback<TopRated>() {
+            @Override
+            public void onResponse(Call<TopRated> call, Response<TopRated> response) {
+                TopRated topRated=response.body();
+                List<Result> movies=topRated.getResults();
+                for (Result movie:movies) {
+                    if (movie.getBackdropPath()!=null)
+                        mmovies_TR.add(movie);
+                }
+                adapter3.notifyDataSetChanged();
+            }
+            @Override
+            public void onFailure(Call<TopRated> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
         return view;
     }
-
 }
