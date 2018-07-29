@@ -190,28 +190,21 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.movies) {
             if (!item.isChecked()) {
-                toolbar=findViewById(R.id.toolbar);
-                toolbar.setBackgroundColor(Color.parseColor("#970e0e"));
                 setTitle("Movies");
                 setFragment(new MovieFragment());
-
             }
-            return true;
         } else if (id == R.id.tv_shows) {
-            if (!item.isChecked()){
-                toolbar=findViewById(R.id.toolbar);
-                toolbar.setBackgroundColor(Color.parseColor("#f2e41f"));
+            if (!item.isChecked()) {
                 setTitle("T.V. Shows");
                 setFragment(new TVShowsFragment());
             }
-            return true;
         } else if (id == R.id.favourites) {
 
         } else if (id == R.id.about) {
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

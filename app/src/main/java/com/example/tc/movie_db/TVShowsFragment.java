@@ -23,7 +23,8 @@ public class TVShowsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_tvshows, container, false);
-        view.findViewById(R.id.upcoming_recycler);
+
+
 
         return view;
     }

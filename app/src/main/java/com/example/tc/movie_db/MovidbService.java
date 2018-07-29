@@ -24,4 +24,7 @@ public interface MovidbService {
 
     @GET("movie/top_rated?api_key="+api_key+"&language=en-US&page=1&region=IN")
     Call<TopRated> getTopRated();
+
+    //TV Shows
+
 }
