@@ -1,6 +1,7 @@
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +11,12 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.example.tc.movie_db.activities.MovieDetailsActivity;
+import com.example.tc.movie_db.MovieViewHolder;
+import com.example.tc.movie_db.R;
+import com.example.tc.movie_db.movies.InitialiseMovieGenres;
+import com.example.tc.movie_db.movies.Result;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,12 +36,13 @@ public class NowShowingAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View imagelayout=inflater.inflate(R.layout.imagelayout,parent,false);
+        //imageButton=imagelayout.findViewById(R.id.favbutton);
         return new MovieViewHolder(imagelayout);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Result movie=movies.get(position);
+    public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
+        final Result movie=movies.get(position);
 
         //1)
         holder.title.setText(movie.getTitle());
@@ -63,9 +69,40 @@ public class NowShowingAdapter extends RecyclerView.Adapter<MovieViewHolder> {
             spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fff2e41f")), 3, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.rating.setText(spannable);
         }
+
         //4)
+        if(movies.get(position).getIsfav())
+            holder.imageButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+        else
+            holder.imageButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+
+        //5)
         setGenres(holder,movies.get(position));
 
+        //6)
+        holder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(movies.get(position).getIsfav()){
+                    holder.imageButton.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    movies.get(position).setIsfav(false);
+                }else{
+                    holder.imageButton.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    movies.get(position).setIsfav(true);
+                }
+            }
+        });
+
+        //7)
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, MovieDetailsActivity.class);
+                intent.putExtra("movie_id",movies.get(position).getId());
+                intent.putExtra("movie_title",movies.get(position).getTitle());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

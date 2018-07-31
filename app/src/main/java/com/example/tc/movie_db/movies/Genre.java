@@ -1,5 +1,5 @@
 
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.movies;
 
 import com.google.gson.annotations.Expose;
 
@@ -9,11 +9,6 @@ public class Genre {
     private Long id;
     @Expose
     private String name;
-
-    public Genre(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public Long getId() {
         return id;

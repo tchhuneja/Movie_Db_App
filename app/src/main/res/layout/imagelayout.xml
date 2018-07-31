@@ -5,9 +5,10 @@
     app:cardCornerRadius="4dp"
     android:layout_margin="4dp"
     android:clickable="true"
-    android:elevation="150dp"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:elevation="150dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:id="@+id/initialcardview">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
@@ -72,9 +73,9 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
                 android:src="@drawable/ic_favorite_border_black_24dp"
-                android:tint="@android:color/darker_gray"
                 app:layout_constraintStart_toEndOf="@+id/genre"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
+
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>

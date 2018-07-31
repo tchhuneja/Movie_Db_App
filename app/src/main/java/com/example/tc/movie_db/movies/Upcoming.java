@@ -1,12 +1,14 @@
 
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.movies;
 
 import java.util.List;
+
+import com.example.tc.movie_db.movies.Dates;
+import com.example.tc.movie_db.movies.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
-public class NowPlaying {
+public class Upcoming {
 
     @Expose
     private Dates dates;

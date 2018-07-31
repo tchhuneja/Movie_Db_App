@@ -1,14 +1,12 @@
 
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.tvshows;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Upcoming {
+public class OnTheAir {
 
-    @Expose
-    private Dates dates;
     @Expose
     private Long page;
     @Expose
@@ -17,14 +15,6 @@ public class Upcoming {
     private Long totalPages;
     @SerializedName("total_results")
     private Long totalResults;
-
-    public Dates getDates() {
-        return dates;
-    }
-
-    public void setDates(Dates dates) {
-        this.dates = dates;
-    }
 
     public Long getPage() {
         return page;

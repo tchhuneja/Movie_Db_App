@@ -1,11 +1,22 @@
 
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.movies;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
 public class Result {
+
+    private Boolean isfav=false;
+
+    public Boolean getIsfav() {
+        return isfav;
+    }
+
+    public void setIsfav(Boolean isfav) {
+        this.isfav = isfav;
+    }
 
     @Expose
     private Boolean adult;

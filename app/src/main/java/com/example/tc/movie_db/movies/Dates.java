@@ -1,5 +1,5 @@
 
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.movies;
 
 
 import com.google.gson.annotations.Expose;

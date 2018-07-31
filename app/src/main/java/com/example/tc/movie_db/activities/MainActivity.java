@@ -1,19 +1,10 @@
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.activities;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,11 +13,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.example.tc.movie_db.R;
+import com.example.tc.movie_db.fragments.MovieFragment;
+import com.example.tc.movie_db.fragments.TVShowsFragment;
+import com.example.tc.movie_db.movies.Genre;
+import com.example.tc.movie_db.movies.InitialiseMovieGenres;
+import com.example.tc.movie_db.movies.MovieGenres;
+import com.example.tc.movie_db.network.ApiClient;
+import com.example.tc.movie_db.network.MovidbService;
+import com.example.tc.movie_db.tvshows.InitialiseTVGenres;
+import com.example.tc.movie_db.tvshows.TvGenres;
 
 import java.util.List;
 
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
+
+    boolean buttonclicked = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,20 +98,38 @@ public class MainActivity extends AppCompatActivity
 //        AlertDialog alertDialog=builder.create();
 //        alertDialog.show();
 
-        final Retrofit retrofit=ApiClient.getRetrofit();
+        final Retrofit retrofit = ApiClient.getRetrofit();
 
-        MovidbService service=retrofit.create(MovidbService.class);
+        MovidbService service = retrofit.create(MovidbService.class);
 
-        Call<MovieGenres> call=service.getMovieGenresList();
+        Call<MovieGenres> call = service.getMovieGenresList();
         call.enqueue(new Callback<MovieGenres>() {
             @Override
             public void onResponse(Call<MovieGenres> call, Response<MovieGenres> response) {
-                MovieGenres movieGenres=response.body();
-                List<Genre> movies=movieGenres.getGenres();
+                MovieGenres movieGenres = response.body();
+                List<Genre> movies = movieGenres.getGenres();
                 InitialiseMovieGenres.setGenresMap(movies);
             }
+
             @Override
             public void onFailure(Call<MovieGenres> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        MovidbService service1 = retrofit.create((MovidbService.class));
+
+        Call<TvGenres> call1 = service1.getTVGenresList();
+        call1.enqueue(new Callback<TvGenres>() {
+            @Override
+            public void onResponse(Call<TvGenres> call, Response<TvGenres> response) {
+                TvGenres tvGenres = response.body();
+                List<com.example.tc.movie_db.tvshows.Genre> tvshows = tvGenres.getGenres();
+                InitialiseTVGenres.setGenresMap(tvshows);
+            }
+
+            @Override
+            public void onFailure(Call<TvGenres> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -144,19 +164,19 @@ public class MainActivity extends AppCompatActivity
         } else {
             final PrettyDialog dialog = new PrettyDialog(this);
             dialog.setTitle("Confirm Exit").setMessage("Are you sure you wish to Exit?")
-                  .setIcon(R.drawable.ic_exit_to_app_black_24dp)
-                  .addButton("Yes", R.color.pdlg_color_white, R.color.pdlg_color_green, new PrettyDialogCallback() {
-                                 @Override
-                                 public void onClick() {
-                                   finish();
-                                 }
-                                 })
-                  .addButton("No", R.color.pdlg_color_white, R.color.pdlg_color_red, new PrettyDialogCallback() {
-                                  @Override
-                                  public void onClick() {
-                                      dialog.dismiss();
-                                  }
-                                  }).show();
+                    .setIcon(R.drawable.ic_exit_to_app_black_24dp)
+                    .addButton("Yes", R.color.pdlg_color_white, R.color.pdlg_color_green, new PrettyDialogCallback() {
+                        @Override
+                        public void onClick() {
+                            finish();
+                        }
+                    })
+                    .addButton("No", R.color.pdlg_color_white, R.color.pdlg_color_red, new PrettyDialogCallback() {
+                        @Override
+                        public void onClick() {
+                            dialog.dismiss();
+                        }
+                    }).show();
         }
     }
 
@@ -204,7 +224,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -216,4 +236,14 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
+//    public void setthisasfavourite() {
+//        final ImageButton imageButton = findViewById(R.id.favbutton);
+//        if (buttonclicked) {
+//            imageButton.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
+//            buttonclicked = false;
+//        } else {
+//            imageButton.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+//            buttonclicked = true;
+//        }
+//    }
 }

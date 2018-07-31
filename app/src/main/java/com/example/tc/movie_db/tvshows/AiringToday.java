@@ -1,12 +1,12 @@
 
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.tvshows;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Popular {
+public class AiringToday {
 
     @Expose
     private Long page;

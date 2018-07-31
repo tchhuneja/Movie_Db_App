@@ -1,4 +1,4 @@
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.fragments;
 
 
 import android.os.Build;
@@ -13,8 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
+import com.example.tc.movie_db.adapters.NowShowingAdapter;
+import com.example.tc.movie_db.R;
+import com.example.tc.movie_db.movies.NowPlaying;
+import com.example.tc.movie_db.movies.Popular;
+import com.example.tc.movie_db.movies.Result;
+import com.example.tc.movie_db.movies.TopRated;
+import com.example.tc.movie_db.movies.Upcoming;
+import com.example.tc.movie_db.network.ApiClient;
+import com.example.tc.movie_db.network.MovidbService;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.util.ArrayList;
@@ -37,6 +45,8 @@ public class MovieFragment extends android.support.v4.app.Fragment {
     ArrayList<Result> mmovies_P=new ArrayList<>();
     ArrayList<Result> mmovies_TR=new ArrayList<>();
 
+    int fetchedCalls = 0;
+
     public MovieFragment() {
         // Required empty public constructor
     }
@@ -58,7 +68,7 @@ public class MovieFragment extends android.support.v4.app.Fragment {
         SnapHelper snapHelper=new GravitySnapHelper(Gravity.START);
         snapHelper.attachToRecyclerView(recyclerView_NS);
 
-        final Retrofit retrofit=ApiClient.getRetrofit();
+        final Retrofit retrofit= ApiClient.getRetrofit();
 
         MovidbService service=retrofit.create(MovidbService.class);
 

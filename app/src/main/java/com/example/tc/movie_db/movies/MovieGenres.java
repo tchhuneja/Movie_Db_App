@@ -1,7 +1,9 @@
 
-package com.example.tc.movie_db;
+package com.example.tc.movie_db.movies;
 
 import java.util.List;
+
+import com.example.tc.movie_db.movies.Genre;
 import com.google.gson.annotations.Expose;
 
 
