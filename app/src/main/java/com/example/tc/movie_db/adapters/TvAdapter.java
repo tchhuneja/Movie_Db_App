@@ -46,7 +46,7 @@ public class TvAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
         //2)
         String backdrop_path=tv.getBackdropPath();
-        Picasso.get().load("https://image.tmdb.org/t/p/w780"+backdrop_path).resize(950,600).into(holder.image);
+        Picasso.get().load("https://image.tmdb.org/t/p/w780"+backdrop_path).resize(973,600).into(holder.image);
 
         //3)
         if (tv.getVoteAverage()>0) {
@@ -95,11 +95,15 @@ public class TvAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     public void setGenres(MovieViewHolder holder, com.example.tc.movie_db.tvshows.Result movie){
         String genrestring=" ";
+        String temp;
         if (movie.getGenreIds().size()==0)
             genrestring="(Not Available)";
         else {
-            for (int i = 0; i < movie.getGenreIds().size(); i++)
-                genrestring += InitialiseTVGenres.getGenreName(movie.getGenreIds().get(i).intValue()) + ", ";
+            for (int i = 0; i < movie.getGenreIds().size(); i++) {
+                temp = InitialiseTVGenres.getGenreName(movie.getGenreIds().get(i).intValue());
+                if (temp != null)
+                    genrestring += temp+", ";
+            }
         }
         if (!genrestring.equals("(Not Available)"))
             holder.genre.setText(genrestring.substring(0,genrestring.length()-2));//to not display ", "

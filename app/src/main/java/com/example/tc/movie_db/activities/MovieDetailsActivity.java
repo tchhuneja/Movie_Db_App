@@ -3,30 +3,31 @@ package com.example.tc.movie_db.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.tc.movie_db.MovieViewHolder;
 import com.example.tc.movie_db.R;
+import com.example.tc.movie_db.adapters.TrailersAdapter;
 import com.example.tc.movie_db.movies.InitialiseMovieGenres;
 import com.example.tc.movie_db.movies.Movie;
-import com.example.tc.movie_db.movies.Result;
 import com.example.tc.movie_db.network.ApiClient;
 import com.example.tc.movie_db.network.MovidbService;
+import com.example.tc.movie_db.trailers.Trailers;
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +40,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView genreTextView,overviewTextView,ratingTextView,releaseDateTextView,durationTextView;
     Toolbar toolbar1;
     String[] date;
+    ArrayList<com.example.tc.movie_db.trailers.Result> trailerz=new ArrayList<>();
+    RecyclerView trailer_recycler,castRecycler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         toolbar1.setTitle(title);
 
         final Retrofit retrofit=ApiClient.getRetrofit();
+
         MovidbService service=retrofit.create(MovidbService.class);
         Call<Movie> call=service.getMovieDetails(id);
         call.enqueue(new Callback<Movie>() {
@@ -69,7 +74,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 Movie movie=response.body();
 
                 String backdrop_path=movie.getBackdropPath();
-                Picasso.get().load("https://image.tmdb.org/t/p/w1280"+backdrop_path).resize(421,255).into(backdropImageView);
+                Picasso.get().load("https://image.tmdb.org/t/p/w1280"+backdrop_path).resize(425,295).into(backdropImageView);
 
                 setGenres(movie);
 
@@ -96,9 +101,62 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
+            }
+        });
+
+        trailer_recycler=findViewById(R.id.trailer_recycler);
+
+        final TrailersAdapter adapter=new TrailersAdapter(this,trailerz);
+
+        trailer_recycler.setAdapter(adapter);
+        trailer_recycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
+        SnapHelper snapHelper=new GravitySnapHelper(Gravity.START);
+        snapHelper.attachToRecyclerView(trailer_recycler);
+
+        MovidbService service1=retrofit.create(MovidbService.class);
+        Call<Trailers> call1=service1.getMovieTrailers(id);
+        call1.enqueue(new Callback<Trailers>() {
+            @Override
+            public void onResponse(Call<Trailers> call, Response<Trailers> response) {
+                Trailers trailers=response.body();
+                List<com.example.tc.movie_db.trailers.Result> movieTrailers=trailers.getResults();
+                trailerz.clear();
+                trailerz.addAll(movieTrailers);
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onFailure(Call<Trailers> call, Throwable t) {
 
             }
         });
+
+//        castRecycler=findViewById(R.id.cast_recycler);
+//
+//        final TrailersAdapter adapter=new TrailersAdapter(this,trailerz);
+//
+//        trailer_recycler.setAdapter(adapter);
+//        trailer_recycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+//
+//        SnapHelper snapHelper=new GravitySnapHelper(Gravity.START);
+//        snapHelper.attachToRecyclerView(trailer_recycler);
+//
+//        MovidbService service1=retrofit.create(MovidbService.class);
+//        Call<Trailers> call1=service1.getMovieTrailers(id);
+//        call1.enqueue(new Callback<Trailers>() {
+//            @Override
+//            public void onResponse(Call<Trailers> call, Response<Trailers> response) {
+//                Trailers trailers=response.body();
+//                List<com.example.tc.movie_db.trailers.Result> movieTrailers=trailers.getResults();
+//                trailerz.clear();
+//                trailerz.addAll(movieTrailers);
+//                adapter.notifyDataSetChanged();
+//            }
+//            @Override
+//            public void onFailure(Call<Trailers> call, Throwable t) {
+//
+//            }
+//        });
 
     }
 

@@ -7,6 +7,7 @@ import com.example.tc.movie_db.movies.NowPlaying;
 import com.example.tc.movie_db.movies.Popular;
 import com.example.tc.movie_db.movies.TopRated;
 import com.example.tc.movie_db.movies.Upcoming;
+import com.example.tc.movie_db.trailers.Trailers;
 import com.example.tc.movie_db.tvshows.AiringToday;
 import com.example.tc.movie_db.tvshows.Latest;
 import com.example.tc.movie_db.tvshows.OnTheAir;
@@ -18,7 +19,7 @@ import retrofit2.http.Path;
 
 public interface MovidbService {
 
-    String api_key="22e390ea1991d3c47cbcfe5341787e99";
+    String api_key="";
 
     //Genres-movies
     @GET("genre/movie/list?api_key="+api_key+"&language=en-US")
@@ -45,6 +46,8 @@ public interface MovidbService {
     @GET("movie/{id}?api_key="+api_key+"&language=en-US")
     Call<Movie> getMovieDetails(@Path("id") Long movieId);
 
+    @GET("movie/{id}/videos?api_key="+api_key+"&language=en-US")
+    Call<Trailers> getMovieTrailers(@Path("id") Long movieId);
 
 
 

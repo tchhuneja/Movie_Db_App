@@ -22,11 +22,4 @@
             android:title="Favourites" />
     </group>
 
-    <group android:checkableBehavior="single">
-        <item
-                android:id="@+id/about"
-                android:icon="@drawable/ic_info_black_24dp"
-                android:title="About" />
-    </group>
-
 </menu>
