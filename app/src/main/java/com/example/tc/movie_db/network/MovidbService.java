@@ -19,7 +19,7 @@ import retrofit2.http.Path;
 
 public interface MovidbService {
 
-    String api_key="";
+    String api_key="Paste Your Api key here";
 
     //Genres-movies
     @GET("genre/movie/list?api_key="+api_key+"&language=en-US")
